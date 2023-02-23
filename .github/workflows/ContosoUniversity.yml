@@ -94,19 +94,30 @@ jobs:
           Api.Address: https://${{ env.AZ_API_NAME }}.azurewebsites.net/
           ApplicationInsights.ConnectionString: ${{ secrets.AZURE_CONTOSO_APP_INSIGHTS }}
       
-      - name: Azure Login
-        uses: Azure/login@v1.4.4
+      - name: ACR build
+        id: build-push-acr
+        uses: azure/acr-build@v1
+        with:
+          service_principal: ${{ secrets.service_principal }}
+          service_principal_password: ${{ secrets.service_principal_password }}
+          tenant: ${{ secrets.tenant }}
+          registry: ${{ secrets.registry }}
+          repository: ${{ secrets.repository }}
+          image:  azure-vote-front
+          folder: azure-vote
+          branch: master
+          tag: latest
+      - name: Azure login
+        id: login
+        uses: azure/login@v1.4.3
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      - name: Deploy API
-        uses: azure/webapps-deploy@v2.2.3
+      - name: Set AKS context
+        id: set-context
+        uses: azure/aks-set-context@v3
         with:
-          app-name: ${{ env.AZ_API_NAME }}
-          package: api-artifact
-      
-      - name: Deploy APP
-        uses: azure/webapps-deploy@v2.2.3
-        with:
-          app-name: ${{ env.AZ_APP_NAME }}
-          package: app-artifact
+          resource-group: '${{ secrets.resource_group }}' 
+          cluster-name: '${{ secrets.cluster_name }}'
+      - name: Setup kubectl
+        id: install-kubectl
+        uses: azure/setup-kubectl@v3
