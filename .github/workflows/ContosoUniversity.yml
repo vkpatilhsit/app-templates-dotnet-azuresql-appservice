@@ -77,23 +77,7 @@ jobs:
         with:
           name: api
           path: api-artifact
-      
-      - name: Variable Substitution API
-        uses: microsoft/variable-substitution@v1
-        with:
-          files: api-artifact/appsettings.json
-        env:
-          ConnectionStrings.ContosoUniversityAPIContext: ${{ secrets.AZURE_CONTOSO_CONN_STRING }}
-          ApplicationInsights.ConnectionString: ${{ secrets.AZURE_CONTOSO_APP_INSIGHTS }}
-      
-      - name: Variable Substitution APP
-        uses: microsoft/variable-substitution@v1
-        with:
-          files: app-artifact/appsettings.json
-        env:
-          Api.Address: https://${{ env.AZ_API_NAME }}.azurewebsites.net/
-          ApplicationInsights.ConnectionString: ${{ secrets.AZURE_CONTOSO_APP_INSIGHTS }}
-      
+                 
       - name: ACR build
         id: build-push-acr
         uses: azure/acr-build@v1
@@ -104,7 +88,7 @@ jobs:
           registry: ${{ secrets.registry }}
           repository: ${{ secrets.repository }}
           image:  ContosoUniversity
-          folder: src/ContosoUniversity.WebApplication
+          folder: src/ContosoUniversity.WebApplication/*
           branch: master
           tag: latest
       - name: Azure login
