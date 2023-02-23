@@ -103,8 +103,8 @@ jobs:
           tenant: ${{ secrets.tenant }}
           registry: ${{ secrets.registry }}
           repository: ${{ secrets.repository }}
-          image:  azure-vote-front
-          folder: azure-vote
+          image:  ContosoUniversity
+          folder: src/ContosoUniversity.WebApplication
           branch: master
           tag: latest
       - name: Azure login
