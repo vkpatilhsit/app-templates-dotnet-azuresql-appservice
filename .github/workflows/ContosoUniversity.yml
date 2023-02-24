@@ -87,7 +87,7 @@ jobs:
           tenant: ${{ secrets.tenant }}
           registry: ${{ secrets.registry }}
           repository: ${{ secrets.repository }}
-          image:  ContosoUniversity
+          image:  contosouniversity
           folder: src/ContosoUniversity.WebApplication/Dockerfile
           dockerfile: src/ContosoUniversity.WebApplication/Dockerfile
           branch: master
