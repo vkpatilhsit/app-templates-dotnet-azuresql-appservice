@@ -88,7 +88,8 @@ jobs:
           registry: ${{ secrets.registry }}
           repository: ${{ secrets.repository }}
           image:  ContosoUniversity
-          folder: src/ContosoUniversity.WebApplication
+          folder: src/ContosoUniversity.WebApplication/Dockerfile
+          dockerfile: src/ContosoUniversity.WebApplication/Dockerfile
           branch: master
           tag: latest
       - name: Azure login
