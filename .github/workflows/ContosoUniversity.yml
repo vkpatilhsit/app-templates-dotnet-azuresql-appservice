@@ -93,7 +93,7 @@ jobs:
           repository: ${{ secrets.repository }}
           git_access_token: ${{ secrets.git_access_token }}
           image:  contosouniversity
-          folder: src/*
+          folder: azure
           dockerfile: src/ContosoUniversity.WebApplication/Dockerfile
           branch: master
           tag: latest
