@@ -77,7 +77,11 @@ jobs:
         with:
           name: api
           path: api-artifact
-                 
+      - name: Azure login
+        id: login
+        uses: azure/login@v1.4.3
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}           
       - name: ACR build
         id: build-push-acr
         uses: azure/acr-build@v1
@@ -92,11 +96,7 @@ jobs:
           dockerfile: src/ContosoUniversity.WebApplication/Dockerfile
           branch: master
           tag: latest
-      - name: Azure login
-        id: login
-        uses: azure/login@v1.4.3
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      
       - name: Set AKS context
         id: set-context
         uses: azure/aks-set-context@v3
